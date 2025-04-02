@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Y1 BIE APR</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Comic+Neue&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue-theme: #E3F2FD;
+  --pink-theme: #FCE4EC;
+  --purple-theme: #F3E5F5;
+  --green-theme: #E8F5E9;
+}
+body {
+  font-family: 'Ma Shan Zheng', cursive;
+  background-color: #f7fafc;
+  touch-action: manipulation;
+  -webkit-text-size-adjust: 100%;
+  margin: 0;
+  padding: 0;
+}
+.header {
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding: 15px 0;
+  text-align: center;
+}
+.title {
+  font-size: 28px;
+  color: #4F46E5;
+  margin: 0;
+  font-family: 'Ma Shan Zheng', cursive;
+}
+.instruction {
+  font-size: 16px;
+  color: #666;
+  margin: 10px 0 0;
+  font-family: 'Ma Shan Zheng', cursive;
+}
+.button-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin: 15px 10px;
+  padding: 0 5px;
+}
+.button-container button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 20px;
+  color: black;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: 'Comic Neue', cursive;
+  transition: all 0.2s;
+  min-width: 80px;
+}
+.button-container button.group-1-btn {
+  background-color: var(--blue-theme);
+}
+.button-container button.group-2-btn {
+  background-color: var(--pink-theme);
+}
+.button-container button.group-3-btn {
+  background-color: var(--purple-theme);
+}
+.button-container button.group-4-btn {
+  background-color: var(--green-theme);
+}
+.button-container button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.flashcard-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 15px;
+  padding: 10px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.card-group {
+  padding: 15px;
+  border-radius: 12px;
+  display: none;
+  background-color: white;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+.group-1 { background-color: var(--blue-theme); }
+.group-2 { background-color: var(--pink-theme); }
+.group-3 { background-color: var(--purple-theme); }
+.group-4 { background-color: var(--green-theme); }
+.group-title {
+  font-weight: bold;
+  padding: 8px 0;
+  margin: 0 0 10px;
+  border-bottom: 2px solid rgba(0,0,0,0.1);
+  font-size: 22px;
+  text-align: center;
+  font-family: 'Ma Shan Zheng', cursive;
+}
+.card {
+  width: 100%;
+  height: 180px;
+  margin: 10px auto;
+  perspective: 1000px;
+  cursor: pointer;
+}
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  background-color: white;
+}
+.card.flipped .card-inner {
+  transform: rotateY(180deg);
+}
+.card-front, .card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  border-radius: 8px;
+  background: white;
+  font-size: 20px;
+  word-break: break-word;
+  overflow: auto;
+  box-sizing: border-box;
+  text-align: center;
+  line-height: 1.4;
+}
+.card-front {
+  font-family: 'Ma Shan Zheng', cursive;
+  color: #333;
+}
+.card-back {
+  transform: rotateY(180deg);
+  font-family: 'Comic Neue', cursive;
+  color: #4F46E5;
+}
+@media (max-width: 600px) {
+  .flashcard-container {
+    grid-template-columns: 1fr;
+  }
+  .card {
+    height: 160px;
+  }
+  .card-front, .card-back {
+    font-size: 18px;
+    padding: 10px;
+  }
+  .title {
+    font-size: 24px;
+  }
+  .group-title {
+    font-size: 20px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1 class="title">Y1 BIE APR</h1>
+  <p class="instruction">点击卡片听发音 | Click card for pronunciation</p>
+</div>
+<div class="button-container">
+  <button class="group-1-btn" onclick="showGroup('group-1')">8/4</button>
+  <button class="group-2-btn" onclick="showGroup('group-2')">15/4</button>
+  <button class="group-3-btn" onclick="showGroup('group-3')">22/4</button>
+  <button class="group-4-btn" onclick="showGroup('group-4')">6/5</button>
+</div>
+<div class="flashcard-container">
+  <!-- 第一组 8/4 -->
+  <section id="group-1" class="card-group group-1">
+    <h2 class="group-title">8/4</h2>
+    <div class="card"><div class="card-inner"><div class="card-front">关上你的书包</div><div class="card-back">Close your bag</div></div></div>
+    <div class="card"><div class="card-inner"><div class="card-front">打开你的书本</div><div class="card-back">Open your book</div></div></div>
+  </section>
+
+  <!-- 第二组 15/4 -->
+  <section id="group-2" class="card-group group-2">
+    <h2 class="group-title">15/4</h2>
+    <div class="card"><div class="card-inner"><div class="card-front">坐在你的桌子前</div><div class="card-back">Sit at your desk</div></div></div>
+    <div class="card"><div class="card-inner"><div class="card-front">把橡皮擦递给我</div><div class="card-back">Pass me the rubber</div></div></div>
+  </section>
+
+  <!-- 第三组 22/4 -->
+  <section id="group-3" class="card-group group-3">
+    <h2 class="group-title">22/4</h2>
+    <div class="card"><div class="card-inner"><div class="card-front">把你的尺收起来</div><div class="card-back">Put your ruler away</div></div></div>
+    <div class="card"><div class="card-inner"><div class="card-front">拿出你的铅笔盒</div><div class="card-back">Take out your pencil case</div></div></div>
+  </section>
+
+  <!-- 第四组 6/5 -->
+  <section id="group-4" class="card-group group-4">
+    <h2 class="group-title">6/5</h2>
+    <div class="card"><div class="card-inner"><div class="card-front">这是我的笔记本</div><div class="card-back">This is my notebook.</div></div></div>
+    <div class="card"><div class="card-inner"><div class="card-front">它是橙色和绿色的</div><div class="card-back">It is green and orange.</div></div></div>
+  </section>
+</div>
+<script>
+// 显示选定的卡片组，隐藏其他
+function showGroup(groupId) {
+  document.querySelectorAll('.card-group').forEach(group => {
+    group.style.display = 'none';
+  });
+  document.getElementById(groupId).style.display = 'block';
+  
+  // 重置所有卡片为未翻转状态
+  document.querySelectorAll('.card').forEach(card => {
+    card.classList.remove('flipped');
+  });
+}
+
+// 卡片点击交互
+document.querySelectorAll('.card').forEach(card => {
+  card.addEventListener('click', function() {
+    this.classList.toggle('flipped');
+    
+    // 播放语音
+    if(this.classList.contains('flipped')) {
+      // 播放英文
+      const englishText = this.querySelector('.card-back').textContent.trim();
+      playAudio(englishText, 'en-US');
+    } else {
+      // 播放中文
+      const chineseText = this.querySelector('.card-front').textContent.trim();
+      playAudio(chineseText, 'zh-CN');
+    }
+  });
+});
+
+// 语音播放功能
+function playAudio(text, lang) {
+  if (window.speechSynthesis) {
+    // 取消当前正在播放的语音
+    window.speechSynthesis.cancel();
+    
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = lang;
+    utterance.rate = 0.9; // 稍微减慢语速
+    
+    // 设置中文和英语的不同语音
+    if(lang === 'zh-CN') {
+      utterance.pitch = 1.2; // 中文音调稍高
+    } else {
+      utterance.pitch = 1; // 英语正常音调
+    }
+    
+    window.speechSynthesis.speak(utterance);
+  } else {
+    alert("您的浏览器不支持语音功能，请使用Chrome或Edge浏览器");
+  }
+}
+
+// 防止移动端双击缩放
+document.addEventListener('dblclick', function(e) {
+  e.preventDefault();
+}, { passive: false });
+
+// 防止移动端长按出现菜单
+document.addEventListener('contextmenu', function(e) {
+  e.preventDefault();
+}, { passive: false });
+
+// 默认显示第一组
+window.onload = function() {
+  showGroup('group-1');
+  
+  // 移动设备上预加载语音合成
+  if (window.speechSynthesis) {
+    // 创建一个无声的语音用于激活语音合成API
+    const utterance = new SpeechSynthesisUtterance('');
+    utterance.volume = 0;
+    window.speechSynthesis.speak(utterance);
+  }
+};
+</script>
+</body>
+</html>
